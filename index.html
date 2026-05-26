@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>billysawthesun.com</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.jpeg">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d0d10;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .background-glow {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+        }
+
+        .glow-1 {
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 140, 0, 0.18);
+            top: -150px;
+            left: -120px;
+        }
+
+        .glow-2 {
+            width: 600px;
+            height: 600px;
+            background: rgba(255, 208, 0, 0.08);
+            bottom: -250px;
+            right: -180px;
+        }
+
+        .glow-3 {
+            width: 350px;
+            height: 350px;
+            background: rgba(255, 80, 120, 0.08);
+            top: 35%;
+            right: 10%;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 80px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+            color: #d4d4d8;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .pulse {
+            width: 10px;
+            height: 10px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(4rem, 10vw, 7rem);
+            line-height: 0.95;
+            font-weight: 900;
+            margin-bottom: 30px;
+            letter-spacing: -4px;
+        }
+
+        .hero p {
+            font-size: 1.35rem;
+            line-height: 1.7;
+            color: #f5d0a9;
+            max-width: 650px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            padding: 16px 30px;
+            border-radius: 18px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #ffb347;
+            color: black;
+            box-shadow: 0 10px 30px rgba(255, 179, 71, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .stats {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat h2 {
+            font-size: 2rem;
+            margin-bottom: 6px;
+        }
+
+        .stat span {
+            color: #a1a1aa;
+            font-size: 0.95rem;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .image-card {
+            position: relative;
+            height: 620px;
+            border-radius: 40px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(to bottom, #1f1f23, #09090b);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+        }
+
+        .image-text {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            z-index: 2;
+        }
+
+        .image-text .real-name {
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #fdba74;
+            font-size: 0.85rem;
+            margin-bottom: 14px;
+        }
+
+        .image-text h3 {
+            font-size: 2.6rem;
+            line-height: 1.1;
+        }
+
+        section {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            color: #fdba74;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.85rem;
+            margin-bottom: 18px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .about-grid h2 {
+            font-size: 4rem;
+            line-height: 1.1;
+        }
+
+        .about-text p {
+            color: #d4d4d8;
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin-bottom: 28px;
+        }
+
+        .genre-grid,
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .genre-card,
+        .music-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            padding: 40px;
+            backdrop-filter: blur(14px);
+            transition: 0.3s ease;
+        }
+
+        .genre-card:hover,
+        .music-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 190, 100, 0.35);
+        }
+
+        .genre-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 18px;
+            background: rgba(255, 179, 71, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .genre-icon::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffb347;
+        }
+
+        .genre-card h3,
+        .music-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 14px;
+        }
+
+        .genre-card p,
+        .music-card p {
+            color: #a1a1aa;
+            line-height: 1.8;
+        }
+
+        .music-image {
+            height: 240px;
+            overflow: hidden;
+            border-radius: 24px;
+            margin-bottom: 28px;
+        }
+
+        .music-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s ease;
+        }
+
+        .music-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .song-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .song-year {
+            color: #71717a;
+            font-size: 0.9rem;
+        }
+
+        .play-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: #fdba74;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .quote-box {
+            max-width: 1000px;
+            margin: auto;
+            text-align: center;
+            padding: 80px;
+            border-radius: 50px;
+            background: linear-gradient(to right, rgba(255, 179, 71, 0.12), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+        }
+
+        .quote-box h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            line-height: 1.4;
+            font-weight: 300;
+        }
+
+        .quote-box p {
+            margin-top: 35px;
+            color: #fdba74;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            padding: 50px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .footer-content span {
+            color: #71717a;
+        }
+
+        .socials {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .socials a {
+            color: #a1a1aa;
+            text-decoration: none;
+            transition: 0.3s ease;
+        }
+
+        .socials a:hover {
+            color: white;
+        }
+
+        @media (max-width: 1000px) {
+
+            .hero-content,
+            .about-grid,
+            .genre-grid,
+            .music-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: auto;
+            }
+
+            .about-grid h2 {
+                font-size: 3rem;
+            }
+
+            .quote-box {
+                padding: 50px 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-glow">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="glow glow-3"></div>
+    </div>
+
+    <section class="hero">
+        <div class="container hero-content">
+
+            <div>
+                <div class="badge">
+                    <div class="pulse"></div>
+                    Johannesburg • Alternative Indie • Rising Artist
+                </div>
+
+                <h1>BillySawTheSun</h1>
+
+                <p>
+                    A warm blend of indie soul, bedroom pop, and late-night honesty.
+                    BillySawTheSun turns everyday emotion into cinematic soundscapes.
+                </p>
+
+                <div class="buttons">
+                    <button class="btn-primary">Listen Now</button>
+                    <button class="btn-secondary">View Discography</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <h2>2.1M</h2>
+                        <span>Monthly Streams</span>
+                    </div>
+
+                    <div class="stat">
+                        <h2>148K</h2>
+                        <span>Followers</span>
+                    </div>
+
+                    <div class="stat">
+                        <h2>18</h2>
+                        <span>Released Singles</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <div class="image-card">
+                    <img src="hero.png"
+                        alt="BillySawTheSun">
+
+                    <div class="image-overlay"></div>
+
+                    <div class="image-text">
+                        <div class="real-name">Owami Mkhize</div>
+                        <h3>Chasing sunlight through sound.</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <div class="container about-grid">
+
+            <div>
+                <div class="section-title">About The Artist</div>
+
+                <h2>
+                    Melancholy,<br>
+                    warmth, and<br>
+                    honest storytelling.
+                </h2>
+            </div>
+
+            <div class="about-text">
+                <p>
+                    Born and raised in Johannesburg, South Africa, Owami Mkhize — known professionally as BillySawTheSun
+                    — creates music that feels like a memory you can dance to.
+                </p>
+
+                <p>
+                    Inspired heavily by the emotional vulnerability of Dominic Fike and the colorful indie textures of
+                    Rex Orange County, his sound blends alternative pop, lo-fi grooves, mellow guitars, and
+                    introspective lyricism into something deeply personal.
+                </p>
+
+                <p>
+                    BillySawTheSun’s music lives somewhere between late-night drives, rooftop conversations, and the
+                    quiet moments people rarely talk about. Every release aims to feel cinematic without losing the raw
+                    honesty of a bedroom recording.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <div class="container genre-grid">
+
+            <div class="genre-card">
+                <div class="genre-icon"></div>
+                <h3>Indie Pop</h3>
+                <p>Warm guitars, catchy melodies, and emotional hooks inspired by modern alternative music.</p>
+            </div>
+
+            <div class="genre-card">
+                <div class="genre-icon"></div>
+                <h3>Bedroom Soul</h3>
+                <p>Lo-fi textures and intimate production designed for late-night listening and reflective moods.</p>
+            </div>
+
+            <div class="genre-card">
+                <div class="genre-icon"></div>
+                <h3>Alternative R&B</h3>
+                <p>Smooth rhythms layered with cinematic storytelling and emotionally honest songwriting.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+
+            <div style="margin-bottom: 60px;">
+                <div class="section-title">Featured Releases</div>
+                <h2 style="font-size: 3.5rem;">Recent Tracks</h2>
+            </div>
+
+            <div class="music-grid">
+
+                <div class="music-card">
+                    <div class="music-image">
+                        <img src="perplexia.png"
+                            alt="Track">
+                    </div>
+
+                    <div class="song-top">
+                        <h3>Perplexia</h3>
+                        <div class="song-year">2025</div>
+                    </div>
+
+                    <p>
+                        A soft indie anthem filled with nostalgic guitars, emotional hooks, and dreamy vocals.
+                    </p>
+
+                    <a href="https://open.spotify.com/album/7ghw0kmcnSDDKle1TXadrv?si=r9PUohN3R72T33kDKtjeLA" class="play-link">Play Preview →</a>
+                </div>
+
+                <div class="music-card">
+                    <div class="music-image">
+                        <img src="Tomorrow Will Worry About Itself.png"
+                            alt="Track">
+                    </div>
+
+                    <div class="song-top">
+                        <h3>Tomorrow Will Worry About Itself</h3>
+                        <div class="song-year">2025</div>
+                    </div>
+
+                    <p>
+                        A late-night alternative groove inspired by changing friendships and growing pains.
+                    </p>
+
+                    <a href="https://open.spotify.com/album/67tnV7ueiCZPX9p6u6XJPt?si=nMOzik2bRQiPRXJfHOgp_Q" class="play-link">Play Preview →</a>
+                </div>
+
+                <div class="music-card">
+                    <div class="music-image">
+                        <img src="O N S R A.png"
+                            alt="Track">
+                    </div>
+
+                    <div class="song-top">
+                        <h3>O N S R A</h3>
+                        <div class="song-year">2025</div>
+                    </div>
+
+                    <p>
+                        A mellow bedroom-pop release about healing, self-growth, and learning patience.
+                    </p>
+
+                    <a href="https://open.spotify.com/track/7xI00PneWOsYyjB970Z52B?si=0ebaf98fef9049e6" class="play-link">Play Preview →</a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="quote-box">
+                <h2>
+                    “I want my music to feel like driving home while the sun disappears behind the city skyline.”
+                </h2>
+
+                <p>BillySawTheSun</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+
+            <div>
+                <h3>BillySawTheSun</h3>
+                <span>Johannesburg, South Africa</span>
+            </div>
+
+            <div class="socials">
+                <a href="https://open.spotify.com/artist/1oAOkCK13V4rmb3mSvL41j?trackId=70Vdd1gx5tn84jkAU31ASv">Spotify</a>
+                <a href="https://www.instagram.com/billysawthesun/">Instagram</a>
+                <a href="https://soundcloud.com/owami-mkhize-413990060">SoundCloud</a>
+            </div>
+
+        </div>
+    </footer>
+
+</body>
+
+</html>
