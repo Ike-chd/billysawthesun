@@ -13,74 +13,114 @@
     <link rel="icon" type="image/x-icon" href="favicon.jpeg">
 
     <style>
+        :root {
+            --bg: #0d0d10;
+            --surface: rgba(255, 255, 255, 0.04);
+            --surface-hover: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 190, 100, 0.35);
+            --accent: #ffb347;
+            --accent-soft: #fdba74;
+            --accent-glow: rgba(255, 179, 71, 0.25);
+            --accent-bg: rgba(255, 179, 71, 0.15);
+            --text: #ffffff;
+            --text-body: #d4d4d8;
+            --text-muted: #a1a1aa;
+            --text-faint: #71717a;
+            --warm-text: #f5d0a9;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0d0d10;
-            color: white;
-            overflow-x: hidden;
+        html {
+            scroll-behavior: smooth;
         }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ── Background Glows ── */
         .background-glow {
             position: fixed;
             inset: 0;
             overflow: hidden;
             z-index: -1;
+            pointer-events: none;
         }
 
         .glow {
             position: absolute;
             border-radius: 50%;
-            filter: blur(120px);
+            filter: blur(140px);
         }
 
         .glow-1 {
-            width: 500px;
-            height: 500px;
-            background: rgba(255, 140, 0, 0.18);
-            top: -150px;
-            left: -120px;
+            width: clamp(300px, 50vw, 600px);
+            height: clamp(300px, 50vw, 600px);
+            background: rgba(255, 140, 0, 0.15);
+            top: -10%;
+            left: -8%;
         }
 
         .glow-2 {
-            width: 600px;
-            height: 600px;
-            background: rgba(255, 208, 0, 0.08);
-            bottom: -250px;
-            right: -180px;
+            width: clamp(350px, 55vw, 700px);
+            height: clamp(350px, 55vw, 700px);
+            background: rgba(255, 208, 0, 0.06);
+            bottom: -15%;
+            right: -10%;
         }
 
         .glow-3 {
-            width: 350px;
-            height: 350px;
-            background: rgba(255, 80, 120, 0.08);
+            width: clamp(200px, 30vw, 400px);
+            height: clamp(200px, 30vw, 400px);
+            background: rgba(255, 80, 120, 0.06);
             top: 35%;
             right: 10%;
         }
 
+        /* ── Container ── */
         .container {
             width: 90%;
             max-width: 1300px;
             margin: auto;
         }
 
+        /* ── Scroll Animations ── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Hero ── */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 80px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 100px 0 80px;
+            border-bottom: 1px solid var(--border);
         }
 
         .hero-content {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
-            gap: 80px;
+            gap: clamp(40px, 6vw, 80px);
             align-items: center;
         }
 
@@ -88,112 +128,114 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 18px;
+            padding: 10px 18px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--surface);
+            border: 1px solid var(--border);
             backdrop-filter: blur(10px);
-            margin-bottom: 30px;
-            color: #d4d4d8;
-            font-size: 14px;
-            letter-spacing: 1px;
+            margin-bottom: 28px;
+            color: var(--text-body);
+            font-size: clamp(0.7rem, 1.5vw, 0.875rem);
+            letter-spacing: 0.8px;
         }
 
         .pulse {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background: #4ade80;
             border-radius: 50%;
             animation: pulse 2s infinite;
+            flex-shrink: 0;
         }
 
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(1.4);
-                opacity: 0.5;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.4; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .hero h1 {
-            font-size: clamp(4rem, 10vw, 7rem);
+            font-size: clamp(3rem, 8vw, 7rem);
             line-height: 0.95;
             font-weight: 900;
-            margin-bottom: 30px;
-            letter-spacing: -4px;
+            margin-bottom: 28px;
+            letter-spacing: clamp(-2px, -0.4vw, -4px);
         }
 
-        .hero p {
-            font-size: 1.35rem;
-            line-height: 1.7;
-            color: #f5d0a9;
-            max-width: 650px;
-            margin-bottom: 40px;
+        .hero > .container > div:first-child > p {
+            font-size: clamp(1rem, 2vw, 1.35rem);
+            line-height: 1.75;
+            color: var(--warm-text);
+            max-width: 600px;
+            margin-bottom: 36px;
             font-weight: 300;
         }
 
         .buttons {
             display: flex;
-            gap: 18px;
+            gap: 14px;
             flex-wrap: wrap;
-            margin-bottom: 50px;
+            margin-bottom: 48px;
         }
 
         .btn-primary,
         .btn-secondary {
-            padding: 16px 30px;
-            border-radius: 18px;
-            font-size: 1rem;
+            padding: 15px 32px;
+            border-radius: 16px;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             border: none;
+            font-family: inherit;
         }
 
         .btn-primary {
-            background: #ffb347;
+            background: var(--accent);
             color: black;
-            box-shadow: 0 10px 30px rgba(255, 179, 71, 0.25);
+            box-shadow: 0 8px 28px var(--accent-glow);
         }
 
         .btn-primary:hover {
-            transform: translateY(-4px) scale(1.02);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(255, 179, 71, 0.35);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0) scale(0.97);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--surface);
+            border: 1px solid var(--border);
             color: white;
             backdrop-filter: blur(10px);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--surface-hover);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.97);
         }
 
         .stats {
             display: flex;
-            gap: 50px;
+            gap: 40px;
             flex-wrap: wrap;
         }
 
         .stat h2 {
-            font-size: 2rem;
-            margin-bottom: 6px;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            margin-bottom: 4px;
+            font-weight: 800;
         }
 
         .stat span {
-            color: #a1a1aa;
-            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         .hero-image {
@@ -202,12 +244,12 @@
 
         .image-card {
             position: relative;
-            height: 620px;
-            border-radius: 40px;
+            aspect-ratio: 4 / 5;
+            border-radius: clamp(24px, 4vw, 40px);
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
             background: linear-gradient(to bottom, #1f1f23, #09090b);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
         }
 
         .image-card img {
@@ -215,184 +257,273 @@
             height: 100%;
             object-fit: cover;
             opacity: 0.9;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .image-card:hover img {
+            transform: scale(1.03);
         }
 
         .image-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 60%);
         }
 
         .image-text {
             position: absolute;
-            bottom: 40px;
-            left: 40px;
+            bottom: clamp(20px, 4vw, 40px);
+            left: clamp(20px, 4vw, 40px);
+            right: clamp(20px, 4vw, 40px);
             z-index: 2;
         }
 
         .image-text .real-name {
             text-transform: uppercase;
             letter-spacing: 4px;
-            color: #fdba74;
-            font-size: 0.85rem;
-            margin-bottom: 14px;
+            color: var(--accent-soft);
+            font-size: 0.8rem;
+            margin-bottom: 12px;
         }
 
         .image-text h3 {
-            font-size: 2.6rem;
-            line-height: 1.1;
+            font-size: clamp(1.5rem, 3.5vw, 2.6rem);
+            line-height: 1.15;
+            font-weight: 700;
         }
 
+        /* ── Sections ── */
         section {
-            padding: 120px 0;
+            padding: clamp(60px, 10vw, 120px) 0;
         }
 
-        .section-title {
-            color: #fdba74;
+        .section-label {
+            color: var(--accent-soft);
             text-transform: uppercase;
             letter-spacing: 4px;
-            font-size: 0.85rem;
-            margin-bottom: 18px;
+            font-size: 0.8rem;
+            margin-bottom: 16px;
+            font-weight: 600;
         }
 
+        /* ── About ── */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            gap: clamp(40px, 6vw, 80px);
+            align-items: start;
         }
 
         .about-grid h2 {
-            font-size: 4rem;
+            font-size: clamp(2.5rem, 5vw, 4rem);
             line-height: 1.1;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .about-text {
+            border-left: 2px solid rgba(255, 179, 71, 0.2);
+            padding-left: clamp(20px, 3vw, 32px);
         }
 
         .about-text p {
-            color: #d4d4d8;
-            font-size: 1.15rem;
+            color: var(--text-body);
+            font-size: clamp(1rem, 1.5vw, 1.15rem);
             line-height: 1.9;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
-        .genre-grid,
-        .music-grid {
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ── Genre Cards ── */
+        .genre-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            gap: 24px;
         }
 
-        .genre-card,
-        .music-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 32px;
-            padding: 40px;
+        .genre-card {
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: clamp(28px, 4vw, 40px);
             backdrop-filter: blur(14px);
-            transition: 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .genre-card:hover,
-        .music-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 190, 100, 0.35);
+        .genre-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border-hover);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
         }
 
         .genre-icon {
-            width: 55px;
-            height: 55px;
-            border-radius: 18px;
-            background: rgba(255, 179, 71, 0.15);
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            background: var(--accent-bg);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
         }
 
         .genre-icon::after {
             content: '';
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
-            background: #ffb347;
+            background: var(--accent);
         }
 
-        .genre-card h3,
-        .music-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 14px;
+        .genre-card h3 {
+            font-size: clamp(1.3rem, 2vw, 1.7rem);
+            margin-bottom: 12px;
+            font-weight: 700;
         }
 
-        .genre-card p,
-        .music-card p {
-            color: #a1a1aa;
-            line-height: 1.8;
+        .genre-card p {
+            color: var(--text-muted);
+            line-height: 1.75;
+            font-size: 0.95rem;
+        }
+
+        /* ── Music / Releases ── */
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .music-card {
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: clamp(20px, 3vw, 28px);
+            backdrop-filter: blur(14px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .music-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border-hover);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
         }
 
         .music-image {
-            height: 240px;
+            aspect-ratio: 16 / 9;
             overflow: hidden;
-            border-radius: 24px;
-            margin-bottom: 28px;
+            border-radius: 18px;
+            margin-bottom: 22px;
         }
 
         .music-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .music-card:hover img {
+        .music-card:hover .music-image img {
             transform: scale(1.05);
         }
 
         .song-top {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+            align-items: baseline;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .song-top h3 {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 700;
         }
 
         .song-year {
-            color: #71717a;
-            font-size: 0.9rem;
+            color: var(--text-faint);
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .music-card > p {
+            color: var(--text-muted);
+            line-height: 1.75;
+            font-size: 0.95rem;
+            margin-bottom: 0;
         }
 
         .play-link {
-            display: inline-block;
-            margin-top: 24px;
-            color: #fdba74;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 20px;
+            color: var(--accent-soft);
             text-decoration: none;
             font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
 
+        .play-link:hover {
+            gap: 10px;
+            color: var(--accent);
+        }
+
+        .play-link::after {
+            content: '';
+            transition: transform 0.3s ease;
+        }
+
+        /* ── Quote ── */
         .quote-box {
             max-width: 1000px;
             margin: auto;
             text-align: center;
-            padding: 80px;
-            border-radius: 50px;
-            background: linear-gradient(to right, rgba(255, 179, 71, 0.12), rgba(255, 255, 255, 0.02));
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: clamp(40px, 6vw, 80px);
+            border-radius: clamp(24px, 4vw, 50px);
+            background: linear-gradient(135deg, rgba(255, 179, 71, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid var(--border);
             backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-box::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            left: 30px;
+            font-size: clamp(6rem, 12vw, 10rem);
+            color: rgba(255, 179, 71, 0.08);
+            font-family: Georgia, serif;
+            line-height: 1;
+            pointer-events: none;
         }
 
         .quote-box h2 {
-            font-size: clamp(2rem, 5vw, 4rem);
+            font-size: clamp(1.5rem, 4vw, 3.5rem);
             line-height: 1.4;
             font-weight: 300;
+            position: relative;
         }
 
-        .quote-box p {
-            margin-top: 35px;
-            color: #fdba74;
+        .quote-box > p {
+            margin-top: 32px;
+            color: var(--accent-soft);
             text-transform: uppercase;
             letter-spacing: 4px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
+        /* ── Footer ── */
         footer {
-            padding: 50px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
         }
 
         .footer-content {
@@ -404,49 +535,153 @@
         }
 
         .footer-content h3 {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            font-weight: 700;
         }
 
-        .footer-content span {
-            color: #71717a;
+        .footer-content > div:first-child span {
+            color: var(--text-faint);
+            font-size: 0.9rem;
         }
 
         .socials {
             display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .socials a {
-            color: #a1a1aa;
+            color: var(--text-muted);
             text-decoration: none;
-            transition: 0.3s ease;
+            padding: 10px 16px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
         }
 
         .socials a:hover {
-            color: white;
+            color: var(--text);
+            background: var(--surface);
         }
 
-        @media (max-width: 1000px) {
+        /* ═══════════════════════════
+           RESPONSIVE BREAKPOINTS
+           ═══════════════════════════ */
 
+        /* Tablets */
+        @media (max-width: 1024px) {
             .hero-content,
-            .about-grid,
-            .genre-grid,
-            .music-grid {
+            .about-grid {
                 grid-template-columns: 1fr;
+                gap: 48px;
             }
 
             .hero {
                 min-height: auto;
+                padding: 80px 0 60px;
             }
 
-            .about-grid h2 {
-                font-size: 3rem;
+            .hero-image {
+                order: -1;
+                max-width: 500px;
             }
 
-            .quote-box {
-                padding: 50px 30px;
+            .about-text {
+                border-left: none;
+                padding-left: 0;
+                border-top: 2px solid rgba(255, 179, 71, 0.15);
+                padding-top: 24px;
+            }
+        }
+
+        /* Large phones / small tablets */
+        @media (max-width: 768px) {
+            .genre-grid,
+            .music-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+
+            .genre-card,
+            .music-card {
+                padding: 24px;
+                border-radius: 22px;
+            }
+
+            .stats {
+                gap: 30px;
+            }
+
+            .section-header h2 {
+                font-size: clamp(2rem, 5vw, 3rem) !important;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 480px) {
+            .hero {
+                padding: 60px 0 40px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .genre-grid,
+            .music-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .genre-card,
+            .music-card {
+                padding: 28px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                text-align: center;
+                padding: 16px 24px;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .stat {
+                padding-bottom: 20px;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .stat:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+
+            .socials {
+                flex-direction: column;
+                gap: 4px;
+                width: 100%;
+            }
+
+            .socials a {
+                justify-content: center;
+                padding: 14px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -466,7 +701,7 @@
             <div>
                 <div class="badge">
                     <div class="pulse"></div>
-                    Johannesburg • Alternative Indie • Rising Artist
+                    Johannesburg · Alternative Indie · Rising Artist
                 </div>
 
                 <h1>BillySawTheSun</h1>
@@ -517,10 +752,10 @@
     </section>
 
     <section>
-        <div class="container about-grid">
+        <div class="container about-grid fade-up">
 
             <div>
-                <div class="section-title">About The Artist</div>
+                <div class="section-label">About The Artist</div>
 
                 <h2>
                     Melancholy,<br>
@@ -542,7 +777,7 @@
                 </p>
 
                 <p>
-                    BillySawTheSun’s music lives somewhere between late-night drives, rooftop conversations, and the
+                    BillySawTheSun's music lives somewhere between late-night drives, rooftop conversations, and the
                     quiet moments people rarely talk about. Every release aims to feel cinematic without losing the raw
                     honesty of a bedroom recording.
                 </p>
@@ -552,7 +787,7 @@
     </section>
 
     <section>
-        <div class="container genre-grid">
+        <div class="container genre-grid fade-up">
 
             <div class="genre-card">
                 <div class="genre-icon"></div>
@@ -578,17 +813,17 @@
     <section>
         <div class="container">
 
-            <div style="margin-bottom: 60px;">
-                <div class="section-title">Featured Releases</div>
-                <h2 style="font-size: 3.5rem;">Recent Tracks</h2>
+            <div class="section-header fade-up" style="margin-bottom: 48px;">
+                <div class="section-label">Featured Releases</div>
+                <h2 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; letter-spacing: -1px;">Recent Tracks</h2>
             </div>
 
-            <div class="music-grid">
+            <div class="music-grid fade-up">
 
                 <div class="music-card">
                     <div class="music-image">
                         <img src="perplexia.png"
-                            alt="Track">
+                            alt="Perplexia">
                     </div>
 
                     <div class="song-top">
@@ -606,7 +841,7 @@
                 <div class="music-card">
                     <div class="music-image">
                         <img src="Tomorrow Will Worry About Itself.png"
-                            alt="Track">
+                            alt="Tomorrow Will Worry About Itself">
                     </div>
 
                     <div class="song-top">
@@ -624,7 +859,7 @@
                 <div class="music-card">
                     <div class="music-image">
                         <img src="O N S R A.png"
-                            alt="Track">
+                            alt="O N S R A">
                     </div>
 
                     <div class="song-top">
@@ -646,9 +881,9 @@
 
     <section>
         <div class="container">
-            <div class="quote-box">
+            <div class="quote-box fade-up">
                 <h2>
-                    “I want my music to feel like driving home while the sun disappears behind the city skyline.”
+                    I want my music to feel like driving home while the sun disappears behind the city skyline.
                 </h2>
 
                 <p>BillySawTheSun</p>
@@ -657,7 +892,7 @@
     </section>
 
     <footer>
-        <div class="container footer-content">
+        <div class="container footer-content fade-up">
 
             <div>
                 <h3>BillySawTheSun</h3>
@@ -672,6 +907,20 @@
 
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        });
+    </script>
 
 </body>
 
